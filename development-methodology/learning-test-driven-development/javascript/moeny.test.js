@@ -1,9 +1,11 @@
 import assert from 'assert'
+import test from 'node:test'
 
 class Dollar {
     constructor(amount) {
         this.amount = amount
     }
+
     times(multiplier) {
         return new Dollar(10)
     }
@@ -11,4 +13,6 @@ class Dollar {
 
 let fiver = new Dollar(5)
 let tenner = fiver.times(2)
-assert.strictEqual(tenner.amount, 10)
+test('tenner should return 10', t => {
+    assert.strictEqual(tenner.amount, 10)
+})
