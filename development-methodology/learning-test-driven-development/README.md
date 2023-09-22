@@ -49,4 +49,12 @@ The act of writing the test first acts as a forcing function -- compelling us to
 
 ### Increased Confidence
 
-TDD increases the confidence in code because each new test flexes the system in new and previously untested ways.0
+TDD increases the confidence in code because each new test flexes the system in new and previously untested ways.
+
+# Chapter 1: The Money Problem
+
+## Red-Green-Refactor: The Building Blocks of TDD
+
+1. Red. Write a failing test
+2. Green. Write just enough production code to make the test green.
+3. Refactor. Remove any code smells. These may be due to duplication, hardcoded values, or improper use of language idioms.
