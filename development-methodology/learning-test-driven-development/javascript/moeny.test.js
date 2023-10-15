@@ -1,5 +1,5 @@
 import assert from 'assert'
-import test from 'node:test'
+import { describe, it } from 'node:test'
 
 class Money {
     constructor(amount, currency) {
@@ -10,24 +10,29 @@ class Money {
     times(multiplier) {
         return new Money(this.amount * multiplier, this.currency)
     }
+
     divide(divisor) {
         return new Money(this.amount / divisor, this.currency)
     }
 }
 
-let fiver = new Money(5)
-let tenner = fiver.times(2)
 
-test('tenner should return 10', t => {
-    assert.strictEqual(tenner.amount, 10)
+describe('Money', () => {
+    it('should return 10 dollars', () => {
+        let fiveDollars = new Money(5, 'USD')
+        let tenDollars = new Money(10, 'USD')
+        assert.deepStrictEqual(fiveDollars.times(2), tenDollars)
+    })
+
+    it('should return 20 euros', () => {
+        let tenEuros = new Money(10, 'EUR')
+        let twentyEuros = new Money(20, 'EUR')
+        assert.deepStrictEqual(tenEuros.times(2), twentyEuros)
+    })
+
+    it('should return 1000.5 won', () => {
+        let originalMoney = new Money(4002, 'KRW')
+        let actualMoneyAfterDivision = originalMoney.divide(4)
+        assert.deepStrictEqual(actualMoneyAfterDivision, new Money(1000.5, 'KRW'))
+    })
 })
-
-let tenEuros = new Money(10, "EUR")
-let twentyEuros = tenEuros.times(2)
-assert.strictEqual(twentyEuros.amount, 20)
-assert.strictEqual(twentyEuros.currency, "EUR")
-
-let originalMoney = new Money(4002, "KRW")
-let actualMoneyAfterDivision = originalMoney.divide(4)
-let expectedMoneyAfterDivision = new Money(1000.5, "KRW")
-assert.deepStrictEqual(actualMoneyAfterDivision, expectedMoneyAfterDivision)
