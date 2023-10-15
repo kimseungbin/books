@@ -17,7 +17,18 @@ test('tenner should return 10', t => {
     assert.strictEqual(tenner.amount, 10)
 })
 
-let tenEuros = new Moeny(10, "EUR")
+class Money {
+    constructor(amount, currency) {
+        this.amount = amount
+        this.currency = currency
+    }
+
+    times(multiplier) {
+        return new Money(this.amount * multiplier, this.currency)
+    }
+}
+
+let tenEuros = new Money(10, "EUR")
 let twentyEuros = tenEuros.times(2)
-assert.strictEqual(twentyEruos.amount, 20)
-assert.strictEqual(twentyEuroes.currency, "EUR")
+assert.strictEqual(twentyEuros.amount, 20)
+assert.strictEqual(twentyEuros.currency, "EUR")
