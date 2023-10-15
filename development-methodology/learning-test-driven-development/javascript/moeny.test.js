@@ -16,3 +16,8 @@ let tenner = fiver.times(2)
 test('tenner should return 10', t => {
     assert.strictEqual(tenner.amount, 10)
 })
+
+let tenEuros = new Moeny(10, "EUR")
+let twentyEuros = tenEuros.times(2)
+assert.strictEqual(twentyEruos.amount, 20)
+assert.strictEqual(twentyEuroes.currency, "EUR")
