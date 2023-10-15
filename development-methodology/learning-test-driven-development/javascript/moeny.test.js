@@ -10,6 +10,9 @@ class Money {
     times(multiplier) {
         return new Money(this.amount * multiplier, this.currency)
     }
+    divide(divisor) {
+        return new Money(this.amount / divisor, this.currency)
+    }
 }
 
 let fiver = new Money(5)
