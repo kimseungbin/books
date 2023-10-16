@@ -16,6 +16,13 @@ class Money {
     }
 }
 
+class Portfolio {
+    add(money) {}
+    evaluate(currency) {
+        return new Money(15, 'USD')
+    }
+}
+
 
 describe('Money', () => {
     it('should return 10 dollars', () => {
