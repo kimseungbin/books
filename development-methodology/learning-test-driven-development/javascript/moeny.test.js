@@ -17,9 +17,15 @@ class Money {
 }
 
 class Portfolio {
-    add(money) {}
+    moneys = []
+    add(...moneys) {
+        this.moneys = this.moneys.concat(moneys)
+    }
     evaluate(currency) {
-        return new Money(15, 'USD')
+        let total = this.moneys.reduce((sum, money) => {
+            return sum + money.amount
+        }, 0)
+        return new Money(total, currency)
     }
 }
 
