@@ -36,3 +36,12 @@ describe('Money', () => {
         assert.deepStrictEqual(actualMoneyAfterDivision, new Money(1000.5, 'KRW'))
     })
 })
+
+describe('Portfolio', () => {
+    it('should return evaluated value of portfolio', () => {
+        let fifteenDollars = new Money(15, 'USD')
+        let portfolio = new Portfolio()
+        portfolio.add(new Money(5, 'USD'), new Money(10, 'USD'))
+        assert.deepStrictEqual(portfolio.evaluate('USD'), fifteenDollars)
+    })
+})
