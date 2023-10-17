@@ -58,3 +58,7 @@ TDD increases the confidence in code because each new test flexes the system in 
 1. Red. Write a failing test
 2. Green. Write just enough production code to make the test green.
 3. Refactor. Remove any code smells. These may be due to duplication, hardcoded values, or improper use of language idioms.
+
+# Chapter 3: Portfolio
+
+It's vital to let our code reflect the realities of our domain.

@@ -16,6 +16,19 @@ class Money {
     }
 }
 
+class Portfolio {
+    moneys = []
+    add(...moneys) {
+        this.moneys = this.moneys.concat(moneys)
+    }
+    evaluate(currency) {
+        let total = this.moneys.reduce((sum, money) => {
+            return sum + money.amount
+        }, 0)
+        return new Money(total, currency)
+    }
+}
+
 
 describe('Money', () => {
     it('should return 10 dollars', () => {
@@ -34,5 +47,14 @@ describe('Money', () => {
         let originalMoney = new Money(4002, 'KRW')
         let actualMoneyAfterDivision = originalMoney.divide(4)
         assert.deepStrictEqual(actualMoneyAfterDivision, new Money(1000.5, 'KRW'))
+    })
+})
+
+describe('Portfolio', () => {
+    it('should return evaluated value of portfolio', () => {
+        let fifteenDollars = new Money(15, 'USD')
+        let portfolio = new Portfolio()
+        portfolio.add(new Money(5, 'USD'), new Money(10, 'USD'))
+        assert.deepStrictEqual(portfolio.evaluate('USD'), fifteenDollars)
     })
 })
