@@ -8,3 +8,11 @@ In this repository, I curate and summarize a collection of CS and Programming-re
 # Rules
 
 1. Quotes that are not explicitly cited are assumed to originated from the books themselves.
+
+# List of Books
+
+## AWS re/Start
+
+[link](./aws-re-start/README.md)
+
+Although it isn't actually a book, however, [AWs re/Start](https://aws.amazon.com/training/restart/) is a cloud education program that I enrolled in during the fall of 2023. This directory contains notes summarizing of what I've learned.
