@@ -153,3 +153,79 @@ Checks security groups for rules that allow unrestricted access (0.0.0.0/0) to s
 - Green (acceptable): HTTP (80), HTTPS (443), SMTP email (25), SMTPS email (465)
 - Red (error): FTP (20, 21), SQL Server (1433, 1434), MySQL (3306), RDP (3389), mini-SQL (4333), PostgreSQL (5432), Oracle (5500)
 - Yellow: All other ports
+
+## Networking & Content Delivery
+
+- Networking basics
+- Amazon VPC
+- VPC networking
+- VPC security
+- Amazon Route 53
+- Amazon CloudFront
+
+### Networking basics
+
+- Classless Inter-Domain Routing
+  - Network identifier . Host identifier / fixed bits
+  - describes a range of IP addresses
+- Open Systems Interconnection (OSI) model
+  - Conceptual model used to explain data as it travels over the network
+
+### Amazon VPC
+
+- Enables you to provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define.
+- Gives you control over your virtual networking resources, including:
+  - Selection of IP address range
+  - Creation of subnets
+  - Configuration of route tables and network gateways.
+- Enables you to customize the network configuration for your VPC.
+- Enables you to use multiple layers of security.
+- Belongs to a single AWS Region
+- Subnets
+  - Range of IP addresses that divide a VPC.
+  - Belong to a single Availability Zone.
+  - Classified as public and private.
+- Maximum IP address range: x.x.x.x/16 (or 65,546 addresses)
+- Minimum IP address range: x.x.x.x/28 (or 16 addresses)
+- Reserved IP addresses
+  - 10.0.0.0 Network address
+  - 10.0.0.1 Internal communication
+  - 10.0.0.2 Domain Name System (DNS) resolution
+  - 10.0.0.3 Future use
+  - 10.0.0.255 Network broadcast address
+- Public IPv4 address
+  - Manually assigned through an Elastic IP address.
+  - Automatically assigned through the auto-assign public IP address settings at the subnet level
+- Elastic IP address
+  - Associated with an AWS account.
+  - Can be allocated and remapped anytime.
+  - Additional costs might apply.
+- Elastic network interface
+  - An elastic network interface is a virtual network interface that you can:
+    - attach to an instance.
+    - detach from the instance, and attach to another instance to redirect network traffic.
+  - Its attributes follow when it is reattached to a new instance.
+  - Each instance in your VPC has a default network interface that is assigned a private IPv4 address from the Ipv4 address range of your VPC range.
+
+#### Route tables and routes
+
+- A route table contains a set of rules (or routes) that you can configure to direct network traffic from your subnet.
+- Each route specifies a destination and a target.
+- By default, every route table contains a local route for communication within the VPC.
+- Each subnet must be associated with a route table (at most one).
+
+### VPC networking
+
+- Internet gateway: connects a VPC to the internet.
+- Network address translation (NAT) gateway
+  - provides the ability for instances in a private subnet to connect to the internet.
+  - prevent public internet from initiating a connection with those instances.
+- VPC sharing
+  - Multiple AWS accounts in the same Organization to create application resources in shared, centrally managed Amazon VPCs.
+- VPC peering: Connects VPC to other VPCs.
+  - IP spaces cannot overlap.
+  - Transitive peering is not supported. Traffic can't be passed to a third VPC.
+  - Only one peering resource between the same two VPCs.
+- AWS Site-to-Site VPN: Connects VPC to remote networks.
+- AWS Direct Connection: Connects VPC to a remote network by using a dedicated network connection.
+- AWS Transit Gateway: Connects VPCs and on-premises networks through a central hub.
