@@ -229,3 +229,18 @@ Checks security groups for rules that allow unrestricted access (0.0.0.0/0) to s
 - AWS Site-to-Site VPN: Connects VPC to remote networks.
 - AWS Direct Connection: Connects VPC to a remote network by using a dedicated network connection.
 - AWS Transit Gateway: Connects VPCs and on-premises networks through a central hub.
+
+### Security Groups & Network Access Control List
+
+- Security Groups
+  - Act at the instance level.
+  - Equivalent to firewalls to EC2 instances.
+  - Stateful. (return traffic is automatically allowed, regardless of rules)
+  - Allow rules only.
+- Network ACLs
+  - Act at the subnet level.
+  - Each subnet in VPC must be associated to an ACL.
+  - A subnet can only be associated to one ACL.
+  - An ACL can be associated to multiple subnets.
+  - Stateless.
+  - Allow and Deny rules.
