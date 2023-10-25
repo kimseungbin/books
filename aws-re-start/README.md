@@ -244,3 +244,7 @@ Checks security groups for rules that allow unrestricted access (0.0.0.0/0) to s
   - An ACL can be associated to multiple subnets.
   - Stateless.
   - Allow and Deny rules.
+
+### Amazon Route 53
+
+- Route 53 fail over can redirect to the secondary type record (e.g. static site in S3)
