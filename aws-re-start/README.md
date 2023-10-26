@@ -248,3 +248,35 @@ Checks security groups for rules that allow unrestricted access (0.0.0.0/0) to s
 ### Amazon Route 53
 
 - Route 53 fail over can redirect to the secondary type record (e.g. static site in S3)
+
+## Cloud Economics and Billing
+
+### Fundamentals of pricing
+
+**3 fundamental drivers of cost with AWS**
+
+- Compute
+  - Charged per hour/second
+  - Varies by instance type
+- Storage
+  - Charged typically per GB
+- Data Transfer
+  - Outbound is aggregated and charged
+  - Inbound has no charge (with some exceptions)
+  - Charged typically per GB
+
+Custom pricing
+
+AWS Free Tier
+
+### AWS Organizations
+
+- Each organization represents a department or a team.
+- Organization Unit
+
+### AWS Support
+
+- Basic
+- Developer: Support for early development on AWS
+- Business: Customers that run production workloads
+- Enterprise: Customers that run business and mission-critical workloads
