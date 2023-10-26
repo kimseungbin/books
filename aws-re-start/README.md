@@ -280,3 +280,106 @@ AWS Free Tier
 - Developer: Support for early development on AWS
 - Business: Customers that run production workloads
 - Enterprise: Customers that run business and mission-critical workloads
+
+# Module 6: Compute
+
+- Compute services overview
+- Amazon EC2
+- Amazon EC2 cost optimization
+- Container services
+- Introduction to AWS Lambda
+- Introduction to AWs Elastic Beanstalk
+
+## AWS Compute services
+
+- Virtual machines
+  - Amazon EC2
+  - High flexibility
+- Serverless
+  - AWS Lambda
+  - Cloud native architecture
+- Container-based
+  - Amazon ECS, EKS, ECR, and AWS Fargate
+- Platform as a Service
+  - AWS Elastic Beanstalk
+
+When selecting compute service...
+- Application design
+- Usage patterns
+- Configuration settings to be managed
+
+## Amazon EC2
+
+### AMIs
+
+- A template that is used to create an EC2 instance
+- Contains a Windows or Linux operating system
+- Often also has some software pre-installed
+
+AMI choices
+- Quick Start: Linux and Windows AMIs that are provided by AWS
+- My AMIs: Any AMIs that you crated
+- AWS Marketplace: Pre-configured templates from third parties
+- Community AMIs: AMIs shared by others; use at your own risk
+
+### Instance Types
+
+- Memory
+- Processing power
+- Disk space and disk type
+- Network performance
+
+Instance type naming
+- family name
+- generation number
+- size
+- e.g. t3.nano
+
+Purposes
+- General Purpose: T
+- Compute Optimized: C
+  - Encoding, game server, and so on
+- Memory Optimized: R
+  - DB, data mining, in-memory-db, and so on
+- Networking
+
+### Networking Settings
+
+Can be created in any Subnet
+
+### IAM Role
+
+Can be attached to EC2 instances
+
+### User data
+
+Customizes the runtime environment of an instance
+
+### Storage options
+
+- Configure the root volume
+- additional storage volumes (optional)
+
+Storage options
+- Amazon Elastic Block Store (EBS)
+  - Durable, block-level storage volumes
+- Amazon Ec2 Instance Store
+  - Temporary storage
+  - Buffers, caches...
+- Amazon Elastic File System (EFS)
+
+### Tags
+
+- A label assigned to an AWS resource
+- Categorizes resources
+
+### Security group
+
+- Virtual firewall
+- All outbound traffic is allowed by default
+
+### Key pair
+
+- A key pari consists of...
+  - A public key (stored in AWs)
+  - A private key
