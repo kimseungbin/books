@@ -383,3 +383,30 @@ Storage options
 - A key pari consists of...
   - A public key (stored in AWs)
   - A private key
+
+# Module 7: Storage
+
+Block vs Object
+
+- Block storage can change one block, but expensive
+- Object storage has to change whole file, but cheap
+
+## Amazon Elastic Block Storage
+
+- Snapshots: saves only new changes since the base snapshot
+- Encryption (free)
+- Elasticity
+- HDD or SSD
+
+## Amazon S3 Glacier
+
+Data archiving service with security, durability, and an extremely low cost.
+
+Uses *vault* instead of bucket.
+
+Retrieval options
+- Standard: 3~5 hours
+- Bulk: 5-12 hours
+- Expedited: 1-5 minutes
+
+Lifecycle policies enable you to delete or move objects based on age. For example, S3 Standard -> S3 IA -> Glacier -> Delete
