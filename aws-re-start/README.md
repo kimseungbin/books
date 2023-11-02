@@ -433,3 +433,128 @@ Features
 - Data warehouse service
 - Divides into **leader node** and **compute nodes**
 - Big data processing
+
+# Module 9: Cloud Architecture
+
+## AWS Well-Architected Framework
+
+Designed to help you build the most secure high-performing, resilient, and efficient infrastructure possible.
+Role of a cloud architect
+- Engaging with decision makers to identify the business goal and the capabilities that need improvement
+- Ensuring alignment between technology deliverables of a solution and the business goals
+- Working with delivery teams that are implementing the solution to ensure that the technology features are appropriate
+
+## Operational Excellence Pillar
+
+It focuses on the ability to run and monitor systems
+
+- Managing and automating changes
+- Responding to events
+- Defining standards to successfully manage daily operations
+
+Operational excellence design principles
+- Perform operations as code
+- Annotate documentation
+- Make frequent, small, reversible changes
+- Refine operations procedures frequently
+- Anticipate failure
+- Learn from all operational events and failures
+
+## Security Pillar
+
+Ability to protect information, systems, and assets.
+
+Security design principles
+- Implement a strong identity foundation (the least privilege)
+- Enable traceability
+- Apply security at all layers
+- Automate security best practices
+- Protect data in transit and at rest
+- Keep people away from data
+- Prepare for security events
+
+## Reliability Pillar
+
+Ability of a system to recover from infrastructure failures
+
+Reliability design principles
+- Test recovery procedures
+- Automatically recover from failure
+- Scale horizontally to increase aggregate system availability
+- Stop guessing capacity
+- Manage change in automation
+
+## Performance Efficiency Pillar
+
+Utilizing IT and computing resources efficiently.
+
+Performance Efficiency design principles
+- Democratize advanced technologies
+  - In cloud, advanced technologies like NoSQL machine learning can be consumed by any team.
+- Go global in minutes
+- Use serverless architectures
+- Experiment more often
+- Have mechanical sympathy
+
+## Cost Optimization Pillar
+
+Ability to run systems  to deliver business value at the lowest price point.
+
+Cost optimization design principles
+- Adopt a consumption model
+- Measure overall efficiency
+- Stop spending money on data center operations
+- Analyze and attribute expenditure
+- Use managed and application-level services to reduce cost of ownership
+
+## Sustainability Pillar
+
+Considering long-term environmental, economic, and societal impact of business activities.
+
+Sustainability design principles
+- Understanding the impact
+- Establish sustainability goals
+- Maximize utilization
+- Anticipate and adopt more efficient hardware and software offerings
+- Use managed services
+- Reduce the downstream impact of the cloud workloads
+
+## Reliability and high availability
+
+Reliability
+- A measure of system's ability to provide functionality when desired by the user
+- Probability that the entire system will function as intended for a specified period
+- Mean time between failures (MTBF) = total time in service/number of failures
+
+Availability
+- Normal operation time / total time
+- A percentage of uptime over time (e.g. 99.9%)
+- Number of 9s
+
+Highly available system
+- System can withstand some measure of degradation while still remaining available
+- Downtime is minimized
+- Minimal human intervention is required
+
+Availability tiers
+
+| Availability | Max Disruption (per year) | Application Category                                       |
+|--------------|---------------------------|------------------------------------------------------------|
+| 99%          | 3 days 15 hours           | Batch processing, data extraction, transfer, and load jobs |
+| 99.9%        | 8 hours 45 minutes        | Internal tool, like knowledge management, project tracking |
+| 99.95%       | 4 hours 22 minutes        | Online commerce, point of sale                             |
+| 99.99%       | 52 minutes                | Video delivery, broadcast systems                          |
+| 99.999%      | 5 minutes                 | ATM transactions, telecommunications systems               |
+
+Factors that influence availability
+- Fault tolerance
+  - built-in redundancy
+  - ability to remain operational
+- Scalability
+  - accommodate increases in capacity needs
+- Recoverability
+  - restoring service
+
+## AWS Trusted Advisor
+
+Online tool providing real-time guidance to help provisioning resources following AWS best practices
