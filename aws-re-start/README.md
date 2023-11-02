@@ -410,3 +410,26 @@ Retrieval options
 - Expedited: 1-5 minutes
 
 Lifecycle policies enable you to delete or move objects based on age. For example, S3 Standard -> S3 IA -> Glacier -> Delete
+
+# Module 8: Database
+
+## Amazon Relational Database Service
+
+Managed RDB providing cost-efficient and resizable capacity.
+Features
+- Managed service
+- Multiple database engine support
+- VPC support: can use ACLs
+- High Availability: uses Multi-AZ deployment
+- Scalability: uses replica instances 
+
+## Amazon DynamoDB
+
+- NoSQL
+- Virtually unlimited storage
+
+## Amazon Redshift
+
+- Data warehouse service
+- Divides into **leader node** and **compute nodes**
+- Big data processing
