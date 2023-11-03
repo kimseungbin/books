@@ -558,3 +558,54 @@ Factors that influence availability
 ## AWS Trusted Advisor
 
 Online tool providing real-time guidance to help provisioning resources following AWS best practices
+
+# Module 10: Auto Scaling and Monitoring
+
+## Elastic Load Balancing
+
+Distributes incoming application or network traffic across multiple targets.
+
+Examples
+- EC2 instances
+- containers
+- IP addresses
+- Lambda functions
+
+### Application Load Balancer
+
+Operates at the application level, Open Systems Interconnection (OSI) model layer 7.
+It routes ***traffic*** to targets.
+Ideal for balancing of HTTP and HTTPS
+
+### Network Load Balancer
+
+Operates at the network transport level, Open Systems Interconnection (OSI) model layer 4.
+It reroutes ***connections*** to targets based on IP data.
+Ideal for balancing both Transmission Control Protocol (TCP) and User Datagram Protocol (UDP) traffic.
+
+### Classic Load Balancer
+
+Provides basic load balancing across multiple EC2 instances.
+Operates at both the application level and the network transport level.
+
+## Amazon CloudWatch
+
+It...
+- Monitors
+- Collects and tracks
+- Alarms
+- Events
+
+## Amazon EC2 Auto Scaling
+
+Computing power is programmable resource.
+
+### Automatic scaling
+
+Useful for predictable workloads
+Auto-scaling group: logical grouping of EC2 instances.
+
+- Manual scaling: uses min/max/desired capacity
+- Scheduled scaling
+- Dynamic scaling: scaling policies
+- Predictive scaling: AWS Auto Scaling (uses historic data)
