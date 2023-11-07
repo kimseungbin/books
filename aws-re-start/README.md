@@ -280,3 +280,332 @@ AWS Free Tier
 - Developer: Support for early development on AWS
 - Business: Customers that run production workloads
 - Enterprise: Customers that run business and mission-critical workloads
+
+# Module 6: Compute
+
+- Compute services overview
+- Amazon EC2
+- Amazon EC2 cost optimization
+- Container services
+- Introduction to AWS Lambda
+- Introduction to AWs Elastic Beanstalk
+
+## AWS Compute services
+
+- Virtual machines
+  - Amazon EC2
+  - High flexibility
+- Serverless
+  - AWS Lambda
+  - Cloud native architecture
+- Container-based
+  - Amazon ECS, EKS, ECR, and AWS Fargate
+- Platform as a Service
+  - AWS Elastic Beanstalk
+
+When selecting compute service...
+- Application design
+- Usage patterns
+- Configuration settings to be managed
+
+## Amazon EC2
+
+### AMIs
+
+- A template that is used to create an EC2 instance
+- Contains a Windows or Linux operating system
+- Often also has some software pre-installed
+
+AMI choices
+- Quick Start: Linux and Windows AMIs that are provided by AWS
+- My AMIs: Any AMIs that you crated
+- AWS Marketplace: Pre-configured templates from third parties
+- Community AMIs: AMIs shared by others; use at your own risk
+
+### Instance Types
+
+- Memory
+- Processing power
+- Disk space and disk type
+- Network performance
+
+Instance type naming
+- family name
+- generation number
+- size
+- e.g. t3.nano
+
+Purposes
+- General Purpose: T
+- Compute Optimized: C
+  - Encoding, game server, and so on
+- Memory Optimized: R
+  - DB, data mining, in-memory-db, and so on
+- Networking
+
+### Networking Settings
+
+Can be created in any Subnet
+
+### IAM Role
+
+Can be attached to EC2 instances
+
+### User data
+
+Customizes the runtime environment of an instance
+
+### Storage options
+
+- Configure the root volume
+- additional storage volumes (optional)
+
+Storage options
+- Amazon Elastic Block Store (EBS)
+  - Durable, block-level storage volumes
+- Amazon Ec2 Instance Store
+  - Temporary storage
+  - Buffers, caches...
+- Amazon Elastic File System (EFS)
+
+### Tags
+
+- A label assigned to an AWS resource
+- Categorizes resources
+
+### Security group
+
+- Virtual firewall
+- All outbound traffic is allowed by default
+
+### Key pair
+
+- A key pari consists of...
+  - A public key (stored in AWs)
+  - A private key
+
+# Module 7: Storage
+
+Block vs Object
+
+- Block storage can change one block, but expensive
+- Object storage has to change whole file, but cheap
+
+## Amazon Elastic Block Storage
+
+- Snapshots: saves only new changes since the base snapshot
+- Encryption (free)
+- Elasticity
+- HDD or SSD
+
+## Amazon S3 Glacier
+
+Data archiving service with security, durability, and an extremely low cost.
+
+Uses *vault* instead of bucket.
+
+Retrieval options
+- Standard: 3~5 hours
+- Bulk: 5-12 hours
+- Expedited: 1-5 minutes
+
+Lifecycle policies enable you to delete or move objects based on age. For example, S3 Standard -> S3 IA -> Glacier -> Delete
+
+# Module 8: Database
+
+## Amazon Relational Database Service
+
+Managed RDB providing cost-efficient and resizable capacity.
+Features
+- Managed service
+- Multiple database engine support
+- VPC support: can use ACLs
+- High Availability: uses Multi-AZ deployment
+- Scalability: uses replica instances 
+
+## Amazon DynamoDB
+
+- NoSQL
+- Virtually unlimited storage
+
+## Amazon Redshift
+
+- Data warehouse service
+- Divides into **leader node** and **compute nodes**
+- Big data processing
+
+# Module 9: Cloud Architecture
+
+## AWS Well-Architected Framework
+
+Designed to help you build the most secure high-performing, resilient, and efficient infrastructure possible.
+Role of a cloud architect
+- Engaging with decision makers to identify the business goal and the capabilities that need improvement
+- Ensuring alignment between technology deliverables of a solution and the business goals
+- Working with delivery teams that are implementing the solution to ensure that the technology features are appropriate
+
+## Operational Excellence Pillar
+
+It focuses on the ability to run and monitor systems
+
+- Managing and automating changes
+- Responding to events
+- Defining standards to successfully manage daily operations
+
+Operational excellence design principles
+- Perform operations as code
+- Annotate documentation
+- Make frequent, small, reversible changes
+- Refine operations procedures frequently
+- Anticipate failure
+- Learn from all operational events and failures
+
+## Security Pillar
+
+Ability to protect information, systems, and assets.
+
+Security design principles
+- Implement a strong identity foundation (the least privilege)
+- Enable traceability
+- Apply security at all layers
+- Automate security best practices
+- Protect data in transit and at rest
+- Keep people away from data
+- Prepare for security events
+
+## Reliability Pillar
+
+Ability of a system to recover from infrastructure failures
+
+Reliability design principles
+- Test recovery procedures
+- Automatically recover from failure
+- Scale horizontally to increase aggregate system availability
+- Stop guessing capacity
+- Manage change in automation
+
+## Performance Efficiency Pillar
+
+Utilizing IT and computing resources efficiently.
+
+Performance Efficiency design principles
+- Democratize advanced technologies
+  - In cloud, advanced technologies like NoSQL machine learning can be consumed by any team.
+- Go global in minutes
+- Use serverless architectures
+- Experiment more often
+- Have mechanical sympathy
+
+## Cost Optimization Pillar
+
+Ability to run systems  to deliver business value at the lowest price point.
+
+Cost optimization design principles
+- Adopt a consumption model
+- Measure overall efficiency
+- Stop spending money on data center operations
+- Analyze and attribute expenditure
+- Use managed and application-level services to reduce cost of ownership
+
+## Sustainability Pillar
+
+Considering long-term environmental, economic, and societal impact of business activities.
+
+Sustainability design principles
+- Understanding the impact
+- Establish sustainability goals
+- Maximize utilization
+- Anticipate and adopt more efficient hardware and software offerings
+- Use managed services
+- Reduce the downstream impact of the cloud workloads
+
+## Reliability and high availability
+
+Reliability
+- A measure of system's ability to provide functionality when desired by the user
+- Probability that the entire system will function as intended for a specified period
+- Mean time between failures (MTBF) = total time in service/number of failures
+
+Availability
+- Normal operation time / total time
+- A percentage of uptime over time (e.g. 99.9%)
+- Number of 9s
+
+Highly available system
+- System can withstand some measure of degradation while still remaining available
+- Downtime is minimized
+- Minimal human intervention is required
+
+Availability tiers
+
+| Availability | Max Disruption (per year) | Application Category                                       |
+|--------------|---------------------------|------------------------------------------------------------|
+| 99%          | 3 days 15 hours           | Batch processing, data extraction, transfer, and load jobs |
+| 99.9%        | 8 hours 45 minutes        | Internal tool, like knowledge management, project tracking |
+| 99.95%       | 4 hours 22 minutes        | Online commerce, point of sale                             |
+| 99.99%       | 52 minutes                | Video delivery, broadcast systems                          |
+| 99.999%      | 5 minutes                 | ATM transactions, telecommunications systems               |
+
+Factors that influence availability
+- Fault tolerance
+  - built-in redundancy
+  - ability to remain operational
+- Scalability
+  - accommodate increases in capacity needs
+- Recoverability
+  - restoring service
+
+## AWS Trusted Advisor
+
+Online tool providing real-time guidance to help provisioning resources following AWS best practices
+
+# Module 10: Auto Scaling and Monitoring
+
+## Elastic Load Balancing
+
+Distributes incoming application or network traffic across multiple targets.
+
+Examples
+- EC2 instances
+- containers
+- IP addresses
+- Lambda functions
+
+### Application Load Balancer
+
+Operates at the application level, Open Systems Interconnection (OSI) model layer 7.
+It routes ***traffic*** to targets.
+Ideal for balancing of HTTP and HTTPS
+
+### Network Load Balancer
+
+Operates at the network transport level, Open Systems Interconnection (OSI) model layer 4.
+It reroutes ***connections*** to targets based on IP data.
+Ideal for balancing both Transmission Control Protocol (TCP) and User Datagram Protocol (UDP) traffic.
+
+### Classic Load Balancer
+
+Provides basic load balancing across multiple EC2 instances.
+Operates at both the application level and the network transport level.
+
+## Amazon CloudWatch
+
+It...
+- Monitors
+- Collects and tracks
+- Alarms
+- Events
+
+## Amazon EC2 Auto Scaling
+
+Computing power is programmable resource.
+
+### Automatic scaling
+
+Useful for predictable workloads
+Auto-scaling group: logical grouping of EC2 instances.
+
+- Manual scaling: uses min/max/desired capacity
+- Scheduled scaling
+- Dynamic scaling: scaling policies
+- Predictive scaling: AWS Auto Scaling (uses historic data)
