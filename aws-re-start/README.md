@@ -609,3 +609,154 @@ Auto-scaling group: logical grouping of EC2 instances.
 - Scheduled scaling
 - Dynamic scaling: scaling policies
 - Predictive scaling: AWS Auto Scaling (uses historic data)
+
+# Week 3
+
+## Module 2: Cloud Architecting Introduction
+
+### What is cloud architecting?
+
+Cloud architecture is the practice of applying cloud characteristics to a solution.
+The solution uses cloud services and features to meet an organization's technical needs and business use cases.
+
+### The Amazon Web Services Well-Architected Framework
+
+WAF describes key concepts, design principles, and architectural best practices for designing and running workloads in the AWS Cloud.
+
+Well-Architected Framework pillars
+- Operational Excellence: deliver business value
+  - Using CloudWatch to monitor the health and performance of workloads; initiating automated responses to adjust the resources
+- Security: Protect and monitor systems
+- Reliability: recover from failure and mitigate disruption
+- Performance Efficiency: Use resources sparingly
+- Cost Optimization: Eliminate unneeded expense
+- Sustainability: Minimize environmental impacts
+
+### Best practices for building solutions on AWS
+
+- Enable scalability
+- Automate the environment
+- Treat resources as disposable
+- Use loosely coupled components
+- Design services, not servers
+- Choose the right database solution
+- Avoid single points of failure
+- Optimize for cost
+- Use caching
+- Secure the entire infrastructure
+
+## Module 3: Adding a Storage Layer
+
+Creating static website on S3
+
+### Using Amazon S3
+
+Object storage service
+- unlimited amounts of unstructured data
+- 5TB max file size of a single object
+- All objects have a REST-accessible globally unique URL
+- All objects have a key, version ID, value, metadata, and subresources
+
+Amazon S3 benefits
+- Durability: 11 9s of durability
+- Availability: 9s availability
+  - Data can be temporarily unavailable, but not lost if durable
+- Scalability
+  - virtually unlimited capacity
+- Security
+- Performance
+
+Use cases
+- media hosting
+- hosting static websites
+- data store for computation and analytics
+- back up and archive critical data
+
+Data consistency model
+S3 provides 2 different data consistency models
+1. Read-After-Write consistency: PUTS of new objects in S3 bucket
+2. Eventual consistency for overwrite PUTS and DELETES
+   - an overwrite or a delete action can take time to propagate to all copies of an object across S3
+   - when updating an existing file and then read it immediately, the older version might be retrieved
+
+### Storing data in Amazon S3
+
+Storage Classes
+- S3 Standard
+- S3 Standard IA
+- S3 One Zone IA
+- S3 Glacier / Deep Archive
+
+### Moving data to and from Amazon S3
+
+1. AWS Management Console
+2. AWS CLI
+3. AWS SDK
+
+#### Multipart upload
+
+- Can upload a single object (from 5 MB to 5 TB) as a set of parts
+- Each part is a contiguous portion of the object's data
+- After all parts of the object are uploaded, S3 assembles these parts and creates the object
+
+Main benefits
+- Improved throughput
+- Quick recovery from any network issues
+- Ability to pause and resume object uploads
+- Ability to begin an upload before you know the final object size
+- Ability to upload large objects
+
+#### Transfer Acceleration
+
+- Accelerates S3 data transfers
+- Uses optimized network protocols and the AWS edge infrastructure
+- Provides the following typical improvement
+  - improves 50% ~ 500% for cross-country transfer of larger objects
+  - Can go even higher under certain conditions
+
+### Using AWS DataSync
+
+Automates and accelerates the copying of large amounts of data to and from AWS Cloud storage services.
+It is used to transfer data between on-premises storage and the AWS Cloud, and transfer data between AWS Cloud storage services.
+
+Features and Benefits
+- Seamless data transfer
+  - Can perform both one-time data transfers and automated ongoing transfers
+  - Each data transfer task provides a one-way transfer between the source storage location and the destination storage location.
+- Fully managed service
+  - Optimizes on how, when, and what data is sent over the network.
+- Secure and Compliant
+  - Uses Transport Layer Security version 1.2 (TLS 1.2)
+  - Each task performs integrity checks
+  - AWS Key Management Service integrates with AWS storage services to encrypt data at rest in AWS Cloud storage.
+- Integration with AWS services
+  - Integrated with S3, EFS, and FSx.
+  - Also integrated with IAM, CloudWatch, CloudTrail, and network connections (Direct Connect, Private Link, Transit Gateway)
+- Const-effective
+  - Const is predictable
+- Simple to use
+
+### Using AWS Storage Gateway
+
+A Hybrid storage service that enables on-premises applications to use AWS Cloud storage.
+
+- Durable storage in the AWS Cloud
+- Standard storage protocols
+- Fully managed cache
+- Optimized and secure data transfer
+- Hardware or software implementation
+
+- S3 File Gateway
+  - Can store and retrieve files as objects in S3 by using the NFS or SMB protocol.
+  - It benefits from S3 features: versioning, cross-Region replication, and lifecycle management.
+- Volume Gateway
+  - Stores in S3 using iSCSI protocol
+- Tape Gateway
+  - Can replace on-premises physical tapes.
+
+### Choosing Regions for your architecture
+
+- Data residency and regulatory compliance
+- Proximity of users to data
+- Availability
+- Cost-effectiveness
