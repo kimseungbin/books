@@ -760,3 +760,103 @@ A Hybrid storage service that enables on-premises applications to use AWS Cloud 
 - Proximity of users to data
 - Availability
 - Cost-effectiveness
+
+## Module 3: Adding a Compute Layer
+
+### Amazon EC2
+
+- Provides virtual machines (servers)
+- Provisions servers in minutes
+- Can automatically scale capacity up or down as needed with Amazon EC2 Auto Scaling
+- Lets you pay only for the capacity that you use
+
+### EC2 Instances
+
+- An instance is a virtual machine that runs on a physical host
+- Can choose different configs of CPU and memory capacity
+- Supports different storage options
+- Provides network connectivity
+
+### Instance type
+
+- CPU, memory, storage, and network performance
+- Type naming: Family, generation, additional capabilities, and size
+- General purpose
+  - Web or application servers
+  - Gaming servers
+  - Caching fleets
+  - Analytics applications
+  - Development or test environments
+  - M, T A families
+- Compute optimized
+  - Batch processing
+  - Distributed analytics
+  - High performance computing (HPC)
+  - Ad serer engines
+  - Multiplayer gaming
+  - Video encoding
+  - C, C5n families
+- Memory optimized
+  - In-memory caches
+  - High-performance databases
+  - Big data analysis
+  - R, X, HMI families
+- Accelerated computing
+  - Machine learning, artificial intelligence
+  - HPC
+  - Graphics
+  - P, G, F families
+- Storage optimized
+  - High-performance databases
+  - Real-time analytics
+  - Transactional workloads
+  - NoSQL databases
+  - Big data
+  - Data warehouses
+  - Log processing
+  - I (for I/O), D, H families
+- AWS Compute Optimizer provides recommendations for optimizing the instance type for running instances.
+
+### Adding storage to an EC2 instance
+
+Only `Instance store` and `EBS (SSD-based)` can be used for *Root Volume*.
+While those two can be used for *Data Volume*, but they can be only used for a single instance.
+For data accessible from multiple instances, use `EFS` or `FSx`
+
+- Instance store
+  - non-persistent storage
+  - the data is stored on the *same physical server* where the instance runs
+  - block-level storage
+  - uses HDD or SSD
+  - the data is lost when the instance is stopped or terminated
+  - example use cases: buffers, cache, and scratch data
+- EBS
+  - persistent block-level storage
+  - can attach to any instance in the same AZ
+  - uses HDD or SSD
+  - can be encrypted
+  - supports snapshots that are persisted to S3
+  - data persists independently of the instance state
+  - example use cases: stand-alone database, general application data storage
+- EFS
+  - fully managed elastic file system
+  - scales automatically up or down as files are added and removed
+  - petabytes of capacity
+  - supports Network File System (NFS) protocols
+  - example use cases: home directories, file system for enterprise applications, DB backups, and so on
+
+### Pricing Options
+
+1. On-Demand Instances
+   - Spiky workloads
+   - workloads experimentation
+2. Reserved Instances
+   - 1-year or 3-year commitment
+   - Committed and steady-state workloads
+3. Savings Plans
+   - more flexibility in exchange for a $/hour commitment
+   - EC2, Fargate, and Lambda
+4. Spot Instances
+   - Fault-tolerant, flexible, stateless workloads
+5. Dedicated Hosts
+   - workloads that require the use of one's own software licenses or single tenancy to meet compliance requirements
