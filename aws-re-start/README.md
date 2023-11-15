@@ -860,3 +860,99 @@ For data accessible from multiple instances, use `EFS` or `FSx`
    - Fault-tolerant, flexible, stateless workloads
 5. Dedicated Hosts
    - workloads that require the use of one's own software licenses or single tenancy to meet compliance requirements
+
+## Module 3: Adding a Database Layer
+
+### Database layer considerations
+
+1. Scalability
+2. Total storage requirements
+3. Object size and type
+4. Durability
+
+### Amazon RDS
+
+#### Instance class
+
+A database instance is the basic building block of RDS. It represents an isolated database environment that is running in the cloud.
+
+Families
+- T family
+  - Burstable
+  - Moderate networking performance
+  - Smaller or variable workload
+- M family
+  - General-purpose
+  - High networking performance
+  - CPU-intensive workload
+- R family
+  - Memory-optimized
+  - High networking performance
+  - Query-intensive, high connection counts workloads
+
+#### Data size
+
+- Aurora scales up to 64 TB
+- MySQL, MariaDB, Oracle, and PostgreSQL scale up to 32 TB
+- Microsoft SQL scales up to 16 TB
+
+#### Storage performance
+
+- SSD
+  - baseline of 3 IOPS
+  - maximum 3,000 IOPS
+
+### Amazon DynamoDB
+
+Consistency
+- Eventual
+  - Default setting
+  - All copies of data usually reach consistency within 1 second
+- Strong
+  - Optional
+  - All reads to return a result that reflects all writes before the read
+
+### Database Security Controls
+
+- VPC
+- IAM
+- Security Groups
+- Secure Sockets Layer (SSL)
+- RDS encryption
+- DynamoDB Encryption
+  - Encryption at rest
+  - Encryption in transit
+
+### Migrating data into AWS databases
+
+#### AWS Data Migration Service (DMS)
+
+- Can either be used for one-time or continuous data replication
+- AWS Schema Conversion Tool (AWS SCT)
+  - supports changing the database engine
+
+Typical migration major steps
+1. Create a target database
+2. Migrate the database schema
+3. Set up the data replication process
+4. Initiate the data transfer and confirm completion
+5. Switch production to the new database (for one-time migrations)
+
+### AWS Snowball Edge
+
+- When database is too large
+- Connection is too slow
+- Privacy and security concerns
+
+Steps
+1. AWS SCT
+2. Snowball Edge
+3. Shipping process
+4. Snowball edge
+5. S3 Bucket
+6. AWS DMS
+7. Target Database
+
+AWS Schema Conversion Tool supports the database engine changes
+
+#### Heterogeneous migration
