@@ -609,3 +609,350 @@ Auto-scaling group: logical grouping of EC2 instances.
 - Scheduled scaling
 - Dynamic scaling: scaling policies
 - Predictive scaling: AWS Auto Scaling (uses historic data)
+
+# Week 3
+
+## Module 2: Cloud Architecting Introduction
+
+### What is cloud architecting?
+
+Cloud architecture is the practice of applying cloud characteristics to a solution.
+The solution uses cloud services and features to meet an organization's technical needs and business use cases.
+
+### The Amazon Web Services Well-Architected Framework
+
+WAF describes key concepts, design principles, and architectural best practices for designing and running workloads in the AWS Cloud.
+
+Well-Architected Framework pillars
+- Operational Excellence: deliver business value
+  - Using CloudWatch to monitor the health and performance of workloads; initiating automated responses to adjust the resources
+- Security: Protect and monitor systems
+- Reliability: recover from failure and mitigate disruption
+- Performance Efficiency: Use resources sparingly
+- Cost Optimization: Eliminate unneeded expense
+- Sustainability: Minimize environmental impacts
+
+### Best practices for building solutions on AWS
+
+- Enable scalability
+- Automate the environment
+- Treat resources as disposable
+- Use loosely coupled components
+- Design services, not servers
+- Choose the right database solution
+- Avoid single points of failure
+- Optimize for cost
+- Use caching
+- Secure the entire infrastructure
+
+## Module 3: Adding a Storage Layer
+
+Creating static website on S3
+
+### Using Amazon S3
+
+Object storage service
+- unlimited amounts of unstructured data
+- 5TB max file size of a single object
+- All objects have a REST-accessible globally unique URL
+- All objects have a key, version ID, value, metadata, and subresources
+
+Amazon S3 benefits
+- Durability: 11 9s of durability
+- Availability: 9s availability
+  - Data can be temporarily unavailable, but not lost if durable
+- Scalability
+  - virtually unlimited capacity
+- Security
+- Performance
+
+Use cases
+- media hosting
+- hosting static websites
+- data store for computation and analytics
+- back up and archive critical data
+
+Data consistency model
+S3 provides 2 different data consistency models
+1. Read-After-Write consistency: PUTS of new objects in S3 bucket
+2. Eventual consistency for overwrite PUTS and DELETES
+   - an overwrite or a delete action can take time to propagate to all copies of an object across S3
+   - when updating an existing file and then read it immediately, the older version might be retrieved
+
+### Storing data in Amazon S3
+
+Storage Classes
+- S3 Standard
+- S3 Standard IA
+- S3 One Zone IA
+- S3 Glacier / Deep Archive
+
+### Moving data to and from Amazon S3
+
+1. AWS Management Console
+2. AWS CLI
+3. AWS SDK
+
+#### Multipart upload
+
+- Can upload a single object (from 5 MB to 5 TB) as a set of parts
+- Each part is a contiguous portion of the object's data
+- After all parts of the object are uploaded, S3 assembles these parts and creates the object
+
+Main benefits
+- Improved throughput
+- Quick recovery from any network issues
+- Ability to pause and resume object uploads
+- Ability to begin an upload before you know the final object size
+- Ability to upload large objects
+
+#### Transfer Acceleration
+
+- Accelerates S3 data transfers
+- Uses optimized network protocols and the AWS edge infrastructure
+- Provides the following typical improvement
+  - improves 50% ~ 500% for cross-country transfer of larger objects
+  - Can go even higher under certain conditions
+
+### Using AWS DataSync
+
+Automates and accelerates the copying of large amounts of data to and from AWS Cloud storage services.
+It is used to transfer data between on-premises storage and the AWS Cloud, and transfer data between AWS Cloud storage services.
+
+Features and Benefits
+- Seamless data transfer
+  - Can perform both one-time data transfers and automated ongoing transfers
+  - Each data transfer task provides a one-way transfer between the source storage location and the destination storage location.
+- Fully managed service
+  - Optimizes on how, when, and what data is sent over the network.
+- Secure and Compliant
+  - Uses Transport Layer Security version 1.2 (TLS 1.2)
+  - Each task performs integrity checks
+  - AWS Key Management Service integrates with AWS storage services to encrypt data at rest in AWS Cloud storage.
+- Integration with AWS services
+  - Integrated with S3, EFS, and FSx.
+  - Also integrated with IAM, CloudWatch, CloudTrail, and network connections (Direct Connect, Private Link, Transit Gateway)
+- Const-effective
+  - Const is predictable
+- Simple to use
+
+### Using AWS Storage Gateway
+
+A Hybrid storage service that enables on-premises applications to use AWS Cloud storage.
+
+- Durable storage in the AWS Cloud
+- Standard storage protocols
+- Fully managed cache
+- Optimized and secure data transfer
+- Hardware or software implementation
+
+- S3 File Gateway
+  - Can store and retrieve files as objects in S3 by using the NFS or SMB protocol.
+  - It benefits from S3 features: versioning, cross-Region replication, and lifecycle management.
+- Volume Gateway
+  - Stores in S3 using iSCSI protocol
+- Tape Gateway
+  - Can replace on-premises physical tapes.
+
+### Choosing Regions for your architecture
+
+- Data residency and regulatory compliance
+- Proximity of users to data
+- Availability
+- Cost-effectiveness
+
+## Module 3: Adding a Compute Layer
+
+### Amazon EC2
+
+- Provides virtual machines (servers)
+- Provisions servers in minutes
+- Can automatically scale capacity up or down as needed with Amazon EC2 Auto Scaling
+- Lets you pay only for the capacity that you use
+
+### EC2 Instances
+
+- An instance is a virtual machine that runs on a physical host
+- Can choose different configs of CPU and memory capacity
+- Supports different storage options
+- Provides network connectivity
+
+### Instance type
+
+- CPU, memory, storage, and network performance
+- Type naming: Family, generation, additional capabilities, and size
+- General purpose
+  - Web or application servers
+  - Gaming servers
+  - Caching fleets
+  - Analytics applications
+  - Development or test environments
+  - M, T A families
+- Compute optimized
+  - Batch processing
+  - Distributed analytics
+  - High performance computing (HPC)
+  - Ad serer engines
+  - Multiplayer gaming
+  - Video encoding
+  - C, C5n families
+- Memory optimized
+  - In-memory caches
+  - High-performance databases
+  - Big data analysis
+  - R, X, HMI families
+- Accelerated computing
+  - Machine learning, artificial intelligence
+  - HPC
+  - Graphics
+  - P, G, F families
+- Storage optimized
+  - High-performance databases
+  - Real-time analytics
+  - Transactional workloads
+  - NoSQL databases
+  - Big data
+  - Data warehouses
+  - Log processing
+  - I (for I/O), D, H families
+- AWS Compute Optimizer provides recommendations for optimizing the instance type for running instances.
+
+### Adding storage to an EC2 instance
+
+Only `Instance store` and `EBS (SSD-based)` can be used for *Root Volume*.
+While those two can be used for *Data Volume*, but they can be only used for a single instance.
+For data accessible from multiple instances, use `EFS` or `FSx`
+
+- Instance store
+  - non-persistent storage
+  - the data is stored on the *same physical server* where the instance runs
+  - block-level storage
+  - uses HDD or SSD
+  - the data is lost when the instance is stopped or terminated
+  - example use cases: buffers, cache, and scratch data
+- EBS
+  - persistent block-level storage
+  - can attach to any instance in the same AZ
+  - uses HDD or SSD
+  - can be encrypted
+  - supports snapshots that are persisted to S3
+  - data persists independently of the instance state
+  - example use cases: stand-alone database, general application data storage
+- EFS
+  - fully managed elastic file system
+  - scales automatically up or down as files are added and removed
+  - petabytes of capacity
+  - supports Network File System (NFS) protocols
+  - example use cases: home directories, file system for enterprise applications, DB backups, and so on
+
+### Pricing Options
+
+1. On-Demand Instances
+   - Spiky workloads
+   - workloads experimentation
+2. Reserved Instances
+   - 1-year or 3-year commitment
+   - Committed and steady-state workloads
+3. Savings Plans
+   - more flexibility in exchange for a $/hour commitment
+   - EC2, Fargate, and Lambda
+4. Spot Instances
+   - Fault-tolerant, flexible, stateless workloads
+5. Dedicated Hosts
+   - workloads that require the use of one's own software licenses or single tenancy to meet compliance requirements
+
+## Module 3: Adding a Database Layer
+
+### Database layer considerations
+
+1. Scalability
+2. Total storage requirements
+3. Object size and type
+4. Durability
+
+### Amazon RDS
+
+#### Instance class
+
+A database instance is the basic building block of RDS. It represents an isolated database environment that is running in the cloud.
+
+Families
+- T family
+  - Burstable
+  - Moderate networking performance
+  - Smaller or variable workload
+- M family
+  - General-purpose
+  - High networking performance
+  - CPU-intensive workload
+- R family
+  - Memory-optimized
+  - High networking performance
+  - Query-intensive, high connection counts workloads
+
+#### Data size
+
+- Aurora scales up to 64 TB
+- MySQL, MariaDB, Oracle, and PostgreSQL scale up to 32 TB
+- Microsoft SQL scales up to 16 TB
+
+#### Storage performance
+
+- SSD
+  - baseline of 3 IOPS
+  - maximum 3,000 IOPS
+
+### Amazon DynamoDB
+
+Consistency
+- Eventual
+  - Default setting
+  - All copies of data usually reach consistency within 1 second
+- Strong
+  - Optional
+  - All reads to return a result that reflects all writes before the read
+
+### Database Security Controls
+
+- VPC
+- IAM
+- Security Groups
+- Secure Sockets Layer (SSL)
+- RDS encryption
+- DynamoDB Encryption
+  - Encryption at rest
+  - Encryption in transit
+
+### Migrating data into AWS databases
+
+#### AWS Data Migration Service (DMS)
+
+- Can either be used for one-time or continuous data replication
+- AWS Schema Conversion Tool (AWS SCT)
+  - supports changing the database engine
+
+Typical migration major steps
+1. Create a target database
+2. Migrate the database schema
+3. Set up the data replication process
+4. Initiate the data transfer and confirm completion
+5. Switch production to the new database (for one-time migrations)
+
+### AWS Snowball Edge
+
+- When database is too large
+- Connection is too slow
+- Privacy and security concerns
+
+Steps
+1. AWS SCT
+2. Snowball Edge
+3. Shipping process
+4. Snowball edge
+5. S3 Bucket
+6. AWS DMS
+7. Target Database
+
+AWS Schema Conversion Tool supports the database engine changes
+
+#### Heterogeneous migration
