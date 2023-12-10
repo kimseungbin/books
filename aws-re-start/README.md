@@ -956,3 +956,261 @@ Steps
 AWS Schema Conversion Tool supports the database engine changes
 
 #### Heterogeneous migration
+
+# Week 4
+
+## Module 1: Creating a Networking Environment
+
+### Creating an AWS networking environment
+
+- Amazon VPC
+  - Provisions a logically isolated sections of the AWS Cloud.
+  - AWS resources are launched within a VPC.
+- VPC deployment
+  - A VPC belongs to a single AWS Region.
+  - A VPC spans all the Availability Zones in a Region, so it can host supported resources from any Availability Zone within its Region.
+  - **A VPC can be extended to AWS Local Zones to place resources closer to end users.**
+- IP addresses
+  - Block size must be between /28 (16 IP addresses) and /16 (65,536 IP addresses)
+- Subnets: Dividing the VPC
+  - A VPC can be divided into one or more subnets.
+  - A subnet is a segment or partition of a VPC's IP address range where a group of resources can be allocated.
+  - Subnets are **not isolation boundaries around applications**. Instead, they are containers for routing policies.
+  - Optionally, it is possible to add subnets in a *Local Zone*.
+  - AWS reserves the first four IP addresses and the last IP address in each subnet CIDR block.
+
+### Connecting AWS networking environment to the internet
+
+- Internet gateway
+  - A VPC component which allows communication between resources in a VPC and the internet.
+  - Horizontally scaled, redundant, and highly available.
+  - Provide a target in a VPC's route tables for internet bound traffic.
+- Applying Internet Gateway (To make a subnet public)
+  - Create an Internet Gateway
+  - Attach it to the VPC
+  - Update the route table associated with the subnet
+    - A route table contains set of rules called routes.
+    - Routes direct network traffic.
+    - When creating a VPC, a main route table is created automatically.
+    - At first, every route table, including the main route table, contains a single local route.
+      - The local route enables communication for all the resources in the VPC.
+      - The local route can't be modified.
+    - Custom route tables can be added.
+    - Multiple subnets can use the same route table.
+    - Only one route table can be associated to a subnet.
+  - Elastic IP addresses
+    - Static and public IPv4 addresses associated with an AWS account.
+    - By associating Elastic IP address instead of Private IP addresses of instances, it is possible to switch traffic to desired target without changing target IP.
+- NAT gateways
+  - NAT gateways give instances in the private subnet the ability to initiate outbound traffic to the internet or other AWS services.
+  - Enables instances in a private subnet to initiate outbound traffic to the internet or other AWs services.
+  - Prevent private instances from receiving inbound connection requests from the internet.
+- Bastion hosts
+  - Reduces risk when connecting some public access to private subnet.
+  - A server whose purpose is to provide access to a private network from an external network.
+  - Must minimize the chances of penetration.
+
+### Securing AWS networking environment
+
+- Security Groups
+  - Stateful firewalls
+  - Act at the level of the instance or network interface
+  - By default, block all inbound traffic and allow all outbound traffic.
+- Chain of security groups
+  - When setting inbound and outbound rules to allow traffic to flow from the top tier to the bottom tier of the architecture, it is possible to chain security groups together to isolate a security breach.
+- Network Access Control Lists
+  - network ACLs
+  - Act at the subnet level
+  - By default, allow all inbound and outbound traffic
+  - Stateless firewalls that requires explicit rules for both inbound and outbound traffic.
+  - Can be associated to multiple subnets
+  - A subnet can be associated to only one network ACL.
+
+## Module 2: Connecting Networks
+
+### Connecting a remote network with AWS Site-to-Site VPN
+
+#### AWS Site-to-Site VPN
+
+- AWS Site-to-Site VPN securely connects on-premises and VPCs.
+- Each Site-to-Site VPN connection uses Internet Protocol security (IPsec) communications to create encrypted virtual private network (VPN) tunnels between two locations.
+- A VPN tunnel is an encrypted link where data can pass from the customer network to or from AWS.
+- Uses gateways that are connection hubs to transfer data between different systems.
+- AWS side uses a virtual private gateway or a transit gateway
+- On-premise side uses customer gateway
+- Provides two VPN tunnels across multiple Availability Zones.
+  - If one tunnel goes down, traffic will still get delivered to the VPC.
+- Charged for each VPN connection hour.
+
+#### Static and dynamic routing
+
+- When creating a Site-to-Site VPN connection, the type of routing must be specified.
+  - Static routing
+    - 50 non-propagated routes per route table by default up to a maximum of 1,000 non-propagated routes.
+  - Dynamic routing
+    - The VPN device must support Border Gateway Protocol (BGP).
+    - supports maximum 100 propagated routes per route table.
+  
+### AWS VPN CloudHub
+
+Connects multiple VPNs.
+
+- Remote sites can communicate with each other and not just the VPC.
+  - Sites must not have overlapping IP ranges.
+- Establishes multiple VPN connections from multiple customer gateway devices to a single virtual private gateway.
+- Maintains high availability.
+
+### Connecting remote network with AWS Direct Connect
+
+DX
+
+- Provides dedicated, private network connection capacity of either 1 Gbps or 10 Gbps.
+- Hybrid environments
+- Transferring large datasets
+- Network performance predictability
+- Security and compliance
+  - Private virtual interface: Enables access to VPCs.
+  - Public virtual interfaces: Enables access to public AWS resources such as S3.
+- Availability can be increased by backup VPN connection.
+
+### VPC Peering
+
+- One-to-one network connecting between two VPCs
+- No gateways, VPN connections, and separate network appliances needed.
+- Highly available connections
+- No single point of failure or bandwidth bottleneck.
+- Traffic always stays on the global AWs backbone.
+- Can be established between different AWS accounts.
+- Cannot have overlapping CIDR blocks.
+- Can have only one peering resource between any two VPCs.
+- Do not support transit peering relationships.
+
+### Scaling VPC network with AWs Transit Gateway
+
+- With Transit Gateway, VPCs and on-premises networks can be connected to a single gateway.
+- Transit Gateway uses a hub-and-spoke model to simplify VPC management and reduce operational costs.
+
+## Module 3: Securing User and Application Access
+
+### Account users and IAM
+
+- Securely control individual and group access to AWS resources
+- Integrates with other AWS services
+- Federated identity managedment
+- Granular permissions
+- Support for multi-factor authentication
+
+- IAM user
+  - can call APIs
+  - given set of security credentials
+- IAM group
+  - collection of users
+- IAM policy
+  - defines which resources can be accessed and the level of access to each resource.
+  - **Permissions** are specified in an IAM policy
+    - A document formatted in JSON.
+    - Defines which resources and operations are allowed
+    - Best practice: follow the *principle of least privilege*.
+    - identity-based policy: attach to an IAM principal.
+      - AWS managed, Customer managed, inline policies
+    - Resource-based policy: attach to an AWS resource.
+      - Always an inline policy
+    - Permissions determination
+      1. Is the permission explicitly denied?
+      2. Is the permission explicitly allowed?
+      3. Implicit deny.
+    
+- IAM role
+  - Mechanism to grant temporary access for making AWS service requests.
+  - Assumable by a person, application, or service.
+
+IAM Policy
+
+
+### Organizing users
+
+IAM group
+- A collection of IAM users.
+- Manages permissions for a collection of users rather than for each individual user.
+
+IAM roles
+- Provides temporary security credentials.
+- Is not uniquely associated with one person.
+- Is assumable by a person, application, or service.
+- Is often used to delegate access.
+- Use cases
+  - Provide AWS resources with access to AWS services
+  - Provide access to externally authenticated users.
+  - Provide access to third parties.
+  - Switch roles to access resources in own AWS account or any other AWs account.
+
+#### Role-based access control (RBAC)
+
+- Traditional approach to access control
+- Grant users specific permissions based on job function. Such as database administrator.
+- Create a distinct IAM role for each permission combination.
+- Update Permissions by adding access for each new resource. It can become time-consuming to keep updating policies.
+
+#### Attribute-based access control (ABAC)
+
+- Highly scalable approach to access control.
+  - Attributes are a key or key-value pair, such as a **tag**.
+  - Example attributes
+    - Team = Developers
+    - Project = Unicorn
+- Permissions (policy) rules are easier to maintain with ABAC than with RBAC.
+- Benefits
+  - Permissions automatically apply, based on attributes.
+  - Granular permissions are possible without a permissions update for every new user or resource.
+  - Fully auditable.
+
+### Federating users
+
+Identity federation
+- User authentication completed by a system that is external to the AWS account.
+  - e.g. corporate directory
+- It provides a way to allow access through existing identities, without creating IAM users.
+
+Identity federation options
+- AWS STS
+  - Public identity service providers (IdPs).
+  - Custom identity broker application.
+- Security Assertion Markup Language (SAML).
+- Amazon Cognito
+
+IdP authentication overview
+1. User access identity broker via application.
+2. Identity broker authenticates user.
+3. Requests temporary credentials from AWS STS.
+4. Temporary credentials returned to application.
+
+Amazon Cognito
+- Fully managed authentication, authorization, and user management for web and mobile application.
+- OpenID Connect (OIDC) compatible.
+- User pools: user directory.
+- Identity pools: users can obtain temporary AWS credentials to access AWS services or resources.
+
+### Multiple accounts
+
+Multiple accounts, a VPC in each Account.
+
+Advantages of multiple accounts
+- Isolate business units or departments.
+- Isolate development, test, and production environments.
+- Isolate auditing data, recovery data.
+- Separate accounts for regulated workloads.
+- Easier to trigger cost alerts for each business unit's consumption.
+
+AWS Organization
+Centrally manage and enforce policies across multiple AWS accounts.
+- Group-based account management.
+- Policy-based access to AWS services.
+- Automated account creation and management.
+- Consolidated billing.
+- API-based.
+
+Primary account in AWS Organizations
+- Create a hierarchy of organizational units (OUs).
+- Assign accounts to OUs as member accounts.
+- Define service control policies (SPCs) that apply permissions restrictions to specific member accounts.
+- Attach the SPCs to root, OUs, or accounts.
