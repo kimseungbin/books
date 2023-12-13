@@ -11,6 +11,11 @@ In this repository, I curate and summarize a collection of CS and Programming-re
 
 # List of Books
 
+## The Secret Life of Programs
+
+[link](./the-secret-life-of-programs/README.md)
+The review is on the translated version "한 권으로 읽는 컴퓨터 구조와 프로그래밍".
+
 ## AWS re/Start
 
 [link](./aws-re-start/README.md)
