@@ -1404,3 +1404,68 @@ CloudWatch components
 - Events
 - Rules
 - Targets
+
+## Module 2: Automating Your Architecture
+
+### Reasons to automate
+
+Risks from manual processes
+  - Difficulty in creating resources, and adding new features and functionality in a large corporate application
+  - Difficulty in managing dependencies on the various systems and subsystems
+  - Lack of support for repeatability at scale (e.g. deploying to multiple Regions)
+  - No version control
+  - Inconsistent data management (Ensuring the same configurations can be challenging)
+  - Lack of audit trails
+
+### Automating your infrastructure
+
+AWS CloudFormation
+- Provisions resources in repeatable manner
+
+How CloudFormation works?
+1. Define resources in a template or use a pre-built template
+2. Upload the template to AWS CloudFormation or point to a template stored in an S3 bucket.
+3. Run a create stack action. Resources are created across multiple services in the AWS account as a running environment.
+4. The stack retains control of the resources that are created. User can later update stack, detect drift or delete stack.
+
+Infrastructure as Code
+- The process of provisioning and managing cloud resources by writing a template file that is both **human readable** and **machine consumable**.
+- It can be replicated, re-deployed, and re-purposed
+- It can roll back to the last good status on failures.
+
+AWS Quick Starts
+- It provides CloudFormation templates that reflect AWS best practices.
+- vs. AWS Marketplace AMIs
+  - Quick Starts is more flexible and modular.
+
+CloudFormation CloudFormer
+- DEPRECATED
+- CloudFormation > Stacks > Create stack > Sample template > CloudFormer
+- It creates an AWS CloudFormation template from the AWS resources in an AWS account.
+
+### Automating deployments
+
+AWS Systems Manager
+- Automates operational tasks
+  - Apply OS patches and software upgrades across a fleet of EC2 instances
+- Simplifies resources and application management
+  - Manage software inventory
+  - View detailed system configurations across the fleet
+- On EC2 instances, SSM Agent can be installed
+- In contrast to CloudFormation, Systems Manager works well for automating within guest operating systems.
+
+AWS OpsWorks
+- Configuration management service.
+- Automate how servers are configured, deployed, and managed.
+- Provides managed instances of Chef and Puppet. (Which are popular automation platforms)
+- It complements CloudFormation
+  1. Use AWS CloudFormation to create the infrastructure (VPC, IAM roles, and so on).
+  2. Deploy the application layer with OpsWorks Stacks.
+
+### AWS Elastic Beanstalk
+
+It is another AWS compute service option. This platform as a service offering facilitates the ability to quickly deploy, scale, and manage web applications and services.
+
+- Ensures that the application is highly available and can handle peak usages.
+- Ensures that the architecture is resilient, and creates regular backups for disaster recovery purposes or deployment rollbacks.
+- Configures and manages the infrastructure, which is time-consuming and requires dedicated teams.
