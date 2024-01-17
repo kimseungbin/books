@@ -1214,3 +1214,258 @@ Primary account in AWS Organizations
 - Assign accounts to OUs as member accounts.
 - Define service control policies (SPCs) that apply permissions restrictions to specific member accounts.
 - Attach the SPCs to root, OUs, or accounts.
+
+# Week 5
+
+## Module 1: Implementing Elasticity, High Availability, and Monitoring.
+
+### Scaling compute resources
+
+Elasticity
+- It is one characteristic of a reactive architecture.
+- It means that the infrastructure can expand and contract when capacity needs changes.
+- For example
+  - Increase the number of web servers when traffic to an application spikes.
+  - Lower the write capacity on a database when traffic decreases.
+  - Handle the day-to-day fluctuation of demand throughout for the architecture.
+
+Scaling
+- A technique that is used to achieve elasticity.
+- The ability to increase or decrease the compute capacity of an application.
+- Horizontal scaling: When adding or removing resources.
+- Vertical scaling: When increasing or decreasing the specifications of an individual resource. 
+
+Amazon EC2 Auto Scaling
+- Automatically adds or removes EC2 instances according to predefined policies, schedule, and monitor.
+- It can detect when an instance is unhealthy, terminate it, and launch an instance to replace it.
+- Uses multiple Availability Zones.
+- Attempts to distribute instances evenly among the Availability Zones that are enabled in an Auto Scaling Group.
+
+Auto Scaling Groups
+- Collections of EC2 instances.
+- For each Auto Scaling Group, the minimum, maximum, and desired capacities are specified.
+
+Scaling policies
+- Fixed instances
+  - By accurately setting the minimum, maximum, and desired capacities.
+  - EC2 Auto Scaling performs a periodic health check on running instances within an Auto Scaling group, and terminates or launches instances accordingly.
+- Manual Scaling
+  - Specify only the change in the maximum, minimum, or desired capacity or an Auto Scaling group.
+- Scheduled Scaling
+  - Scaling actions are performed automatically as a function of time and date.
+- Scale based on demand
+  - Advanced way to scale resources.
+  - Can define scaling policy that dynamically resizes an Auto Scaling group to meet changes in demand.
+  - Simple scaling: increase or decrease the current capacity of the group based on a single scaling adjustment.
+  - Step scaling; Increase or decrease the current capacity of the group based on a set of scaling adjustments.
+  - Target tracking scaling: Increase or decrease the current capacity of the group based on a target value for a specific metric.
+- Predictive scaling
+  - Use machine learning to predict capacity requirements based on historical data from CloudWatch that monitors EC2 instances.
+
+Lifecycle hooks
+- Auto Scaling group can be aware of events in the Auto Scaling instance lifecycle.
+- The group then performs a custom action when the corresponding lifecycle event occurs.
+- The instance 
+
+
+### Scaling databases
+
+Amazon RDS
+- Can be vertically scaled up and down.
+  - Storage size must be separately adjusted.
+  - Amazon RDS storage auto scaling is also supported
+- Horizontal scaling
+  - For read-heavy workloads
+  - Up to 5 read replicas and up to 15 Aurora replicas
+  - Replication is asynchronous.
+- Aurora replicas
+  - Primary DB: only one.
+  - Aurora Replicas: only support read operations.
+- Aurora Serverless
+  - Scales up and down automatically.
+
+Database Sharding
+- Without shards, all data resides in one partition.
+- With sharding, data is split into large chunks (shards).
+  - e.g. Even-numbered employee IDs in one database, and odd-numbered employee IDs in another database.
+  - In many circumstances, sharding improves write performance.
+
+DynamoDB
+- Pay per request
+- Use case: spiky, unpredictable workloads.
+- Auto scaling enabled for default. Works with CloudWatch.
+- How to implement DynamoDB auto scaling
+  1. Create scaling policy
+  2. Consumed capacity metrics are published to Amazon CloudWatch
+  3. CloudWatch uses Amazon SNS to send email.
+  4. CloudWatch alarm invokes Application Auto Scaling.
+  5. Application Auto Scaling issues UpdateTable request.
+  6. DynamoDB processes request.
+- Adaptive capacity
+  - Enables reading and writing to hot partitions without throttling.
+  - Automatically increases throughput capacity fo partitions that receive more traffic.
+  - Is enabled automatically for every DynamoDB table.
+
+Highly available systems
+- One that can work for an extended period of time, called uptime.
+- Eliminates single points of failure, which are critical points in the architecture that can break the entire system when they fail.
+- In a highly available system, downtime is minimized as much as possible, and minimal human intervention is required.
+
+Elastic Load Balancing
+- A managed load balancing service that automatically distributes incoming application traffic across multiple targets.
+- Targets: EC2 instances, containers, IP addresses, and AWS Lambda functions.
+- Only sends traffic to healthy targets.
+- High availability: can distribute traffic across multiple Availability Zones.
+- Health checks: can be configured to detect unhealthy targets, stop sending traffic to them, and then spread the load across the remaining healthy targets.
+- Security: can associate Security Groups with Load Balancers.
+- TLS termination: supports Transport Layer Security (TLS) termination. Can centrally manage the SSL settings of the load balancer and offload CPU-intensive work for applications.
+- HTTP or HTTPS: can load balance layer 7 of Open Systems Interconnection (OSI) model.
+- TCP: can load balance layer: 4 transport layer.
+- Operational monitoring: can work with CloudWatch metrics and request tracing.
+- Types
+  - Application Load Balancers for HTTP and HTTPS traffic.
+  - Network Load Balancers for TCP traffic.
+  - Classic Load Balancers for EC2 classic network (supports all HTTP, HTTPS, and TCP)
+
+Types of load balancers
+- Application Load Balancer
+  - Operates at the application level (OSI model layer 7).
+  - Routes traffic to targets - EC2 instances, containers, IP addresses, and Lambda functions - based on the content of the request.
+  - Advanced load balancing of HTTP and HTTPS traffic.
+  - Supports microservices and container-based applications.
+- Network load balancer
+  - operates at the network transport level (OSI model layer 4).
+  - Routes connections to targets such as EC2 instances, containers, and IP addresses.
+  - Works well for TCP and UDP traffic.
+  - Can handle millions of requests per second while maintaining ultra-low latencies.
+  - Optimized to handle sudden and volatile network traffic patterns.
+- Classic load balancer
+  - Operates at both the application level and the network transport level.
+  - When possible, do not use.
+
+Implementing high availability with ELB.
+- Use two Availability Zones.
+- Add a second load balancer: Balancing Inbound private traffic from public subnets.
+- Use a NAT Gateway.
+  - Resources in multiple Availability Zones that share one NAT gateway are vulnerable as the NAT gateway goes down, all resources lose internet access.
+
+Amazon Route 53
+- Highly available and scalable cloud DNS service.
+- Simple routing: Distributes the number of requests as evenly as possible between all participating servers.
+- Weighted round robin routing: Enables users to assign weights to resources record sets to specify the frequency that different responses are served at.
+  - Used for A/B testing.
+  - Weight can be any number between 0 and 255.
+- Latency-based routing
+  - Use when resources are in multiple AWS Regions and want to route traffic to the region that provides the best latency.
+- Geolocation routing
+  - Enables you to choose the resources that serve your traffic based on the geographic location of your users (the origin of the DNS queries).
+  - Can localize your content and present some or all of your website in the language of your users.
+  - Can also use geolocation routing to restrict the distribution of content to only the locations where you have distribution rights.
+- Geoproximity routing
+  - Can route traffic based on the physical distance between users and resources.
+  - Can specify either an AWS Region or the latitude and longitude for each endpoint.
+- Failover routing
+  - active-passive failover.
+  - Route 53 health-checking agents monitor each location or endpoint of applications to determine its availability.
+  - Can be used to increase availability of customer-facing applications.
+- Multivalued answering routing
+  - Can route traffic approximately randomly to multiple resources, such as web servers.
+  - Route 53 gives different answers to different DNS resolvers.
+
+### Monitoring
+
+Essential component of reactive architecture.
+- Operational Health
+- Resource Utilization
+- Application Performance
+- Security Auditing
+
+Monitoring costs
+- AWS Cost Explorer
+- AWS Budgets
+  - can set custom budgets.
+- AWS Cost and Usage Report
+  - contains most comprehensive usage data.
+- Cost Optimization Monitor
+  - Solution architecture automatically process detailed billing reports.
+  - Search, analyze, and visualize billings.
+
+Amazon CloudWatch
+- Monitoring and Observability service.
+- Collects and tracks metrics for resources and applications.
+- Correlate, visualize, and analyze metrics and logs.
+- Enables to create alarms and detect anomalous behavior.
+- Can send notifications or make changes to resources that are monitored.
+
+CloudWatch components
+- Metrics: Data about the performance of the systems.
+- Logs: Monitor, store, and access logs from different sources.
+- Alarms: Automatically respond to monitored conditions.
+- Events
+- Rules
+- Targets
+
+## Module 2: Automating Your Architecture
+
+### Reasons to automate
+
+Risks from manual processes
+  - Difficulty in creating resources, and adding new features and functionality in a large corporate application
+  - Difficulty in managing dependencies on the various systems and subsystems
+  - Lack of support for repeatability at scale (e.g. deploying to multiple Regions)
+  - No version control
+  - Inconsistent data management (Ensuring the same configurations can be challenging)
+  - Lack of audit trails
+
+### Automating your infrastructure
+
+AWS CloudFormation
+- Provisions resources in repeatable manner
+
+How CloudFormation works?
+1. Define resources in a template or use a pre-built template
+2. Upload the template to AWS CloudFormation or point to a template stored in an S3 bucket.
+3. Run a create stack action. Resources are created across multiple services in the AWS account as a running environment.
+4. The stack retains control of the resources that are created. User can later update stack, detect drift or delete stack.
+
+Infrastructure as Code
+- The process of provisioning and managing cloud resources by writing a template file that is both **human readable** and **machine consumable**.
+- It can be replicated, re-deployed, and re-purposed
+- It can roll back to the last good status on failures.
+
+AWS Quick Starts
+- It provides CloudFormation templates that reflect AWS best practices.
+- vs. AWS Marketplace AMIs
+  - Quick Starts is more flexible and modular.
+
+CloudFormation CloudFormer
+- DEPRECATED
+- CloudFormation > Stacks > Create stack > Sample template > CloudFormer
+- It creates an AWS CloudFormation template from the AWS resources in an AWS account.
+
+### Automating deployments
+
+AWS Systems Manager
+- Automates operational tasks
+  - Apply OS patches and software upgrades across a fleet of EC2 instances
+- Simplifies resources and application management
+  - Manage software inventory
+  - View detailed system configurations across the fleet
+- On EC2 instances, SSM Agent can be installed
+- In contrast to CloudFormation, Systems Manager works well for automating within guest operating systems.
+
+AWS OpsWorks
+- Configuration management service.
+- Automate how servers are configured, deployed, and managed.
+- Provides managed instances of Chef and Puppet. (Which are popular automation platforms)
+- It complements CloudFormation
+  1. Use AWS CloudFormation to create the infrastructure (VPC, IAM roles, and so on).
+  2. Deploy the application layer with OpsWorks Stacks.
+
+### AWS Elastic Beanstalk
+
+It is another AWS compute service option. This platform as a service offering facilitates the ability to quickly deploy, scale, and manage web applications and services.
+
+- Ensures that the application is highly available and can handle peak usages.
+- Ensures that the architecture is resilient, and creates regular backups for disaster recovery purposes or deployment rollbacks.
+- Configures and manages the infrastructure, which is time-consuming and requires dedicated teams.
