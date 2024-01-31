@@ -21,3 +21,9 @@ The review is on the translated version "한 권으로 읽는 컴퓨터 구조�
 [link](./aws-re-start/README.md)
 
 Although it isn't actually a book, however, [AWs re/Start](https://aws.amazon.com/training/restart/) is a cloud education program that I enrolled in during the fall of 2023. This directory contains notes summarizing of what I've learned.
+
+# Node.js High Performance
+
+[link](https://www.amazon.com/Node-js-High-Performance-Diogo-Resende/dp/1785286145)
+
+Take your application to the next level of high performance using the extensive capabilities of Node.js
