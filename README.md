@@ -27,3 +27,10 @@ Although it isn't actually a book, however, [AWs re/Start](https://aws.amazon.co
 [link](https://www.amazon.com/Node-js-High-Performance-Diogo-Resende/dp/1785286145)
 
 Take your application to the next level of high performance using the extensive capabilities of Node.js
+
+# Programming Kubernetes
+
+[link](https://www.oreilly.com/library/view/programming-kubernetes/9781492047094/)
+
+> If you’re looking to develop native applications in Kubernetes, this is your guide. Developers and AppOps administrators will learn how to build Kubernetes-native applications that interact directly with the API server to query or update the state of resources. AWS developer advocate Michael Hausenblas and Red Hat principal software engineer Stefan Schimanski explain the characteristics of these apps and show you how to program Kubernetes to build them.
+
